@@ -149,21 +149,7 @@ class CPU {
         //         return;
         // }
 
-        if (IR === LDI) {
-            this.alu(IR, operandA, operandB)
-        } 
-        else if (IR === PRN) {
-            this.alu(IR, operandA, operandB)
-        }
-        else if (IR === HLT && !operandA) {
-            this.alu(IR, operandA, operandB)
-        } 
-        else if (IR === MUL) {
-            this.alu(IR, operandA, operandB)
-        } else {
-            console.log('This code is not defined: ', IR)
-            // this.stopClock()
-        }
+        this.alu(IR, operandA, operandB)
         
         // Increment the PC register to go to the next instruction. Instructions
         // can be 1, 2, or 3 bytes long. Hint: the high 2 bits of the
