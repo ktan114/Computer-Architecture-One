@@ -9,6 +9,7 @@
  const LDI = 0b10011001;
  const PRN = 0b01000011;
  const HLT = 0b00000001;
+ const MUL = 0b10101010;
 
 class CPU {
 
@@ -84,16 +85,24 @@ class CPU {
             //     } else {
             //         this.reg.poke('0000LGE', 'L');
             //     }
-            case 'MUL':
-                return regA = regA * regB;
-            // case 'LDI':
-            //     this.PC += 2
-            //     return `10011001` + regA + regB
-            // case 'PRN':
-            //     console.log(regB)
-            // case 'HLT':
-            //     this.stopClock();
-            // default:
+            case MUL:
+                this.reg[regA] = this.reg[regA] * this.reg[regB]
+                this.PC += 3;
+                break;
+            case LDI:
+                this.reg[regA] = regB;
+                this.PC += 3;
+                break;
+            case PRN:
+                console.log(this.reg[regA]);
+                this.PC += 2;
+                break;
+            case HLT:
+                this.stopClock();
+                break;
+            default:
+                this.stopClock();
+                break;
         }
     }
 
@@ -123,21 +132,37 @@ class CPU {
         // outlined in the LS-8 spec.
         
         // !!! IMPLEMENT ME
-        switch(IR) {
-            case LDI: 
-                this.reg[operandA] = operandB;
-                this.PC += 3;
-                break;
-            case PRN: 
-                console.log(this.reg[operandA]);
-                this.PC += 2;
-                break;
-            case HLT: 
-                this.stopClock();
-                break;
-            default:
-                this.stopClock();
-                return;
+        // switch(IR) {
+        //     case LDI: 
+        //         this.reg[operandA] = operandB;
+        //         this.PC += 3;
+        //         break;
+        //     case PRN: 
+        //         console.log(this.reg[operandA]);
+        //         this.PC += 2;
+        //         break;
+        //     case HLT: 
+        //         this.stopClock();
+        //         break;
+        //     default:
+        //         this.stopClock();
+        //         return;
+        // }
+
+        if (IR === LDI) {
+            this.alu(IR, operandA, operandB)
+        } 
+        else if (IR === PRN) {
+            this.alu(IR, operandA, operandB)
+        }
+        else if (IR === HLT && !operandA) {
+            this.alu(IR, operandA, operandB)
+        } 
+        else if (IR === MUL) {
+            this.alu(IR, operandA, operandB)
+        } else {
+            console.log('This code is not defined: ', IR)
+            // this.stopClock()
         }
         
         // Increment the PC register to go to the next instruction. Instructions
