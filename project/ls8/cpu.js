@@ -60,31 +60,6 @@ class CPU {
      */
     alu(op, regA, regB) {
         switch (op) {
-            // case 'ADD':
-            //     // !!! IMPLEMENT ME
-            //     return regA = regA + regB;
-            // case 'SUB':
-            //     // !!! IMPLEMENT ME
-            //     return regA = regA - regB;
-            // case 'DIV':
-            //     // !!! IMPLEMENT ME
-            //     return regA = regA / regB;
-            // case 'INC':
-            //     // !!! IMPLEMENT ME
-            //     return this.reg + 1
-            // case 'DEC':
-            //     // !!! IMPLEMENT ME
-            //     return this.reg - 1 
-            // case 'CMP':
-            //     // !!! IMPLEMENT ME
-            //     if (regA === regB) {
-            //         this.reg.poke('0000LGE', 'E');
-            //     } 
-            //     else if (regA > regB) {
-            //         this.reg.poke('0000LGE', 'G');
-            //     } else {
-            //         this.reg.poke('0000LGE', 'L');
-            //     }
             case MUL:
                 this.reg[regA] = this.reg[regA] * this.reg[regB]
                 this.PC += 3;
@@ -131,6 +106,8 @@ class CPU {
         // Execute the instruction. Perform the actions for the instruction as
         // outlined in the LS-8 spec.
         
+        // Step 2-5
+
         // !!! IMPLEMENT ME
         // switch(IR) {
         //     case LDI: 
@@ -149,6 +126,7 @@ class CPU {
         //         return;
         // }
 
+        // Multiply - Step 6
         this.alu(IR, operandA, operandB)
         
         // Increment the PC register to go to the next instruction. Instructions
@@ -157,6 +135,7 @@ class CPU {
         // for any particular instruction.
         
         // !!! IMPLEMENT ME
+
 
     }
 }
