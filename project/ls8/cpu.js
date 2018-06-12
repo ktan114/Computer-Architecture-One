@@ -5,6 +5,11 @@
 /**
  * Class for simulating a simple Computer (CPU & memory)
  */
+
+ const LDI = 0b10011001;
+ const PRN = 0b01000011;
+ const HLT = 0b00000001;
+
 class CPU {
 
     /**
@@ -54,9 +59,41 @@ class CPU {
      */
     alu(op, regA, regB) {
         switch (op) {
+            // case 'ADD':
+            //     // !!! IMPLEMENT ME
+            //     return regA = regA + regB;
+            // case 'SUB':
+            //     // !!! IMPLEMENT ME
+            //     return regA = regA - regB;
+            // case 'DIV':
+            //     // !!! IMPLEMENT ME
+            //     return regA = regA / regB;
+            // case 'INC':
+            //     // !!! IMPLEMENT ME
+            //     return this.reg + 1
+            // case 'DEC':
+            //     // !!! IMPLEMENT ME
+            //     return this.reg - 1 
+            // case 'CMP':
+            //     // !!! IMPLEMENT ME
+            //     if (regA === regB) {
+            //         this.reg.poke('0000LGE', 'E');
+            //     } 
+            //     else if (regA > regB) {
+            //         this.reg.poke('0000LGE', 'G');
+            //     } else {
+            //         this.reg.poke('0000LGE', 'L');
+            //     }
             case 'MUL':
-                // !!! IMPLEMENT ME
-                break;
+                return regA = regA * regB;
+            // case 'LDI':
+            //     this.PC += 2
+            //     return `10011001` + regA + regB
+            // case 'PRN':
+            //     console.log(regB)
+            // case 'HLT':
+            //     this.stopClock();
+            // default:
         }
     }
 
@@ -70,26 +107,46 @@ class CPU {
         // right now.)
 
         // !!! IMPLEMENT ME
-
+        const IR = this.ram.read(this.PC);
+        
         // Debugging output
-        //console.log(`${this.PC}: ${IR.toString(2)}`);
-
+        // console.log(`${this.PC}: ${IR.toString(2)}`);
+        
         // Get the two bytes in memory _after_ the PC in case the instruction
         // needs them.
-
+        
         // !!! IMPLEMENT ME
-
+        const operandA = this.ram.read(this.PC + 1);
+        const operandB = this.ram.read(this.PC + 2);
+        
         // Execute the instruction. Perform the actions for the instruction as
         // outlined in the LS-8 spec.
-
+        
         // !!! IMPLEMENT ME
-
+        switch(IR) {
+            case LDI: 
+                this.reg[operandA] = operandB;
+                this.PC += 3;
+                break;
+            case PRN: 
+                console.log(this.reg[operandA]);
+                this.PC += 2;
+                break;
+            case HLT: 
+                this.stopClock();
+                break;
+            default:
+                this.stopClock();
+                return;
+        }
+        
         // Increment the PC register to go to the next instruction. Instructions
         // can be 1, 2, or 3 bytes long. Hint: the high 2 bits of the
         // instruction byte tells you how many bytes follow the instruction byte
         // for any particular instruction.
         
         // !!! IMPLEMENT ME
+
     }
 }
 
