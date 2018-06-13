@@ -52,7 +52,7 @@ const argv = process.argv.slice(2);
 const filename = argv[0];
 
 // Define the regex
-const regexp = /[0-9]{8}/gi;
+const regexp = /[0-1]{8}/gi;
 
 // Reads the filename and 
 const filedata = fs.readFileSync(filename, "utf8").match(regexp);
