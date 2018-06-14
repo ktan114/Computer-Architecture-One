@@ -12,6 +12,9 @@
  const MUL = 0b10101010;
  const PUSH = 0b01001101;
  const POP = 0b01001100;
+ const CALL = 0b01001000;
+ const RET = 0b00001001;
+ const ADD = 0b10101000;
 
  // Step 8 progress
     //  const branchTable = [];
@@ -47,8 +50,8 @@ class CPU {
         
         // Special-purpose registers
         this.PC = 0; // Program Counter
-        this.SP = 244; // 7 = R7, SP = stack pointer
-        this.reg[7] = this.SP; // 244 = F4
+        this.SP = 7; // 7 = R7, SP = stack pointer
+        this.reg[this.SP] = 244; // 244 = F4
     }
     
     /**
@@ -86,8 +89,12 @@ class CPU {
      */
     alu(op, regA, regB) {
         switch (op) {
+            case ADD: 
+                this.reg[regA] = this.reg[regA] + this.reg[regB];
+                this.PC += 3;
+                break;
             case MUL:
-                this.reg[regA] = this.reg[regA] * this.reg[regB]
+                this.reg[regA] = this.reg[regA] * this.reg[regB];
                 this.PC += 3;
                 break;
             case LDI:
@@ -102,19 +109,29 @@ class CPU {
                 this.stopClock();
                 break;
             case PUSH:
-                this.ram.write(this.reg[7] - 1, this.reg[regA])
+                this.SP--;
+                this.ram.write(this.reg[this.SP] - 1, this.reg[regA])
                 this.PC += 2;
-                // this.SP--;
-                console.log('register before decrement', this.reg)
-                this.reg[7] -= 1;
-                console.log('after decrementing', this.reg)
+                // console.log('register before decrement', this.reg)
+                this.reg[this.SP] -= 1;
+                // console.log('after decrementing', this.reg)
                 break;
             case POP:
-                this.reg[regA] = this.ram.read(this.reg[7]);
-                // this.SP++;
+                this.reg[regA] = this.ram.read(this.reg[this.SP]);
+                this.SP++;
                 this.PC += 2;
-                console.log('before increment', this.reg)
-                this.reg[7] += 1;
+                // console.log('before increment', this.reg)
+                this.reg[this.SP] += 1;
+                // console.log(this.reg)
+                break;
+            case CALL:
+                this.reg[this.SP] - 1; 
+                this.ram.write(this.reg[this.SP], this.PC + 2) // The address of the _next_ instruction that will execute is pushed onto the stack.
+                this.PC = this.reg[regA]
+                break;
+            case RET: 
+                this.PC = this.ram.read(this.reg[this.SP]);
+                this.reg[this.SP] += 1;
                 console.log(this.reg)
                 break;
             default:
