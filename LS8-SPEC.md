@@ -48,7 +48,8 @@ Memory map:
 ```
       top of RAM
 +-----------------------+
-| FF  I7 vector         |    Interrupt vector table
+| FF  I7 vector         |    Interrupt vector
+table
 | FE  I6 vector         |
 | FD  I5 vector         |
 | FC  I4 vector         |

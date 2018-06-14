@@ -6,15 +6,26 @@
  * Class for simulating a simple Computer (CPU & memory)
  */
 
+//  Print correct values
  const LDI = 0b10011001;
  const PRN = 0b01000011;
  const HLT = 0b00000001;
  const MUL = 0b10101010;
+
+// Stack
  const PUSH = 0b01001101;
  const POP = 0b01001100;
+
+// Subroutine call
  const CALL = 0b01001000;
  const RET = 0b00001001;
  const ADD = 0b10101000;
+
+// Interrupt
+ const ST = 0b10011010;
+ const JMP = 0b01010000;
+ const PRA = 0b01000010;
+ const IRET = 0b00001011;
 
  // Step 8 progress
     //  const branchTable = [];
@@ -50,6 +61,8 @@ class CPU {
         
         // Special-purpose registers
         this.PC = 0; // Program Counter
+        this.IM = 5; // R5, interrupt mask
+        this.IS = 6; // R6, interrupt status
         this.SP = 7; // 7 = R7, SP = stack pointer
         this.reg[this.SP] = 244; // 244 = F4
     }
@@ -133,6 +146,20 @@ class CPU {
                 this.PC = this.ram.read(this.reg[this.SP]);
                 this.reg[this.SP] += 1;
                 console.log(this.reg)
+                break;
+            case ST:
+                this.reg[regA] = this.reg[regB]
+
+                this.PC += 3;
+                break;
+            case JMP: 
+                this.PC = this.reg[regA];
+                break;
+            case PRA: 
+
+                this.PC += 2;
+                break;
+            case IRET:
                 break;
             default:
                 this.stopClock();
