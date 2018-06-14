@@ -104,12 +104,18 @@ class CPU {
             case PUSH:
                 this.ram.write(this.reg[7] - 1, this.reg[regA])
                 this.PC += 2;
+                // this.SP--;
+                console.log('register before decrement', this.reg)
                 this.reg[7] -= 1;
+                console.log('after decrementing', this.reg)
                 break;
             case POP:
                 this.reg[regA] = this.ram.read(this.reg[7]);
+                // this.SP++;
                 this.PC += 2;
+                console.log('before increment', this.reg)
                 this.reg[7] += 1;
+                console.log(this.reg)
                 break;
             default:
                 this.stopClock();

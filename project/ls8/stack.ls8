@@ -6,16 +6,16 @@
 # 2
 
 10011001 # LDI R0,1
-00000000
-00000001
+00000000 # register 0
+00000001 # value 1 
 10011001 # LDI R1,2
-00000001
-00000010
+00000001 # register 1 
+00000010 # value 2, replaced to value 1 by POP
 01001101 # PUSH R0
-00000000
+00000000 # register 0, writes value at register 0 to ram
 01001100 # POP R1
-00000001
-01000011 # PRN R1
+00000001 # register 1, reads the value at register 1
+01000011 # PRN R1 -> print value of register 1
 00000001
 
 10011001 # LDI R0,2
