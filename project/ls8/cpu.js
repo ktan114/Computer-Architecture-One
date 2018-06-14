@@ -26,6 +26,7 @@
  const JMP = 0b01010000;
  const PRA = 0b01000010;
  const IRET = 0b00001011;
+ const CMP = 0b10100000;
 
  // Step 8 progress
     //  const branchTable = [];
@@ -64,6 +65,8 @@ class CPU {
         this.IM = 5; // R5, interrupt mask
         this.IS = 6; // R6, interrupt status
         this.SP = 7; // 7 = R7, SP = stack pointer
+        this.FL = 
+
         this.reg[this.SP] = 244; // 244 = F4
     }
     
@@ -157,9 +160,14 @@ class CPU {
                 break;
             case PRA: 
 
+                console.log(String.fromCharCode(this.reg[regA])) // String.fromCharCode
                 this.PC += 2;
                 break;
+            case CMP: 
+
+                break;
             case IRET:
+
                 break;
             default:
                 this.stopClock();
